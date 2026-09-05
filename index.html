@@ -6,13 +6,16 @@
     <meta name="referrer" content="no-referrer" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'none'; base-uri 'none'; connect-src 'none'; font-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'none'; script-src 'sha256-JQg9P2hbXyuNaJ+bccokSilQrerI28xIgayXi/O9mwE='; style-src 'unsafe-inline'"
+      content="default-src 'none'; base-uri 'none'; connect-src 'none'; font-src 'none'; form-action 'none'; frame-ancestors 'none'; img-src 'none'; script-src 'sha256-BonCn/NLVbJsAsDsY7TpN+jR7lwKimmAWpyOeOa5ApA='; style-src 'unsafe-inline'"
     />
     <title>Continue to eaze</title>
     <style>
       :root {
         color-scheme: light;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      html {
+        display: none;
       }
       body {
         margin: 0;
@@ -70,6 +73,12 @@
     </main>
     <script>
       (() => {
+        if (window.top !== window.self) {
+          document.documentElement.remove();
+          return;
+        }
+        document.documentElement.style.display = "block";
+
         const title = document.getElementById("title");
         const message = document.getElementById("message");
         const button = document.getElementById("continue");
@@ -80,7 +89,10 @@
         const tokenHash = params.get("token_hash") || "";
         const type = params.get("type") || "";
         const validKeys =
-          keys.length === 2 && keys.every((key) => key === "token_hash" || key === "type");
+          location.search === "" &&
+          location.pathname === "/" &&
+          keys.length === 2 &&
+          keys.every((key) => key === "token_hash" || key === "type");
         const validToken = /^[A-Za-z0-9._~-]{32,512}$/.test(tokenHash);
 
         const fail = () => {
