@@ -1,1 +1,37 @@
-{"applinks":{"details":[{"appIDs":["7PVT5WZ6V8.uk.co.eaze.app"],"components":[{"/":"/confirm/","comment":"Email signup confirmation only; all other pages stay on the web."}]}]}}
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "7PVT5WZ6V8.uk.co.eaze.app"
+        ],
+        "components": [
+          {
+            "/": "/confirm/"
+          },
+          {
+            "/": "/sign-in/"
+          },
+          {
+            "/": "/reset-password/"
+          },
+          {
+            "/": "/email-change/"
+          },
+          {
+            "/": "/staging/confirm/"
+          },
+          {
+            "/": "/staging/sign-in/"
+          },
+          {
+            "/": "/staging/reset-password/"
+          },
+          {
+            "/": "/staging/email-change/"
+          }
+        ]
+      }
+    ]
+  }
+}

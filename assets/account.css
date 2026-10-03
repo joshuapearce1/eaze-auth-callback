@@ -1,0 +1,146 @@
+@font-face {
+  font-family: Manrope;
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("./manrope-latin.woff2") format("woff2");
+}
+:root {
+  color-scheme: light;
+  font-family:
+    Manrope,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  color: #1c1b19;
+  background: #f7f3ec;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100svh;
+  padding: max(28px, env(safe-area-inset-top))
+    max(24px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.brand {
+  display: block;
+  width: 88px;
+  height: auto;
+}
+.brand-line {
+  height: 3px;
+  width: 64px;
+  border-radius: 4px;
+  margin: 10px auto 0;
+  background: linear-gradient(
+    96deg,
+    #f3c35d,
+    #f4a16f 26%,
+    #e5a1c2 52%,
+    #c0a5e2 76%,
+    #89b5ec
+  );
+}
+header {
+  padding-top: 8px;
+}
+main {
+  width: 100%;
+  max-width: 368px;
+  margin: auto 0;
+  padding: 48px 0;
+  text-align: center;
+}
+.mascot {
+  width: 140px;
+  height: 121px;
+  display: block;
+  margin: 0 auto 32px;
+}
+h1 {
+  font-size: clamp(28px, 7.3vw, 34px);
+  font-weight: 550;
+  letter-spacing: -1.2px;
+  line-height: 1.17;
+  margin: 0 0 16px;
+  text-wrap: balance;
+}
+p {
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 0;
+  color: #6b665e;
+  text-wrap: pretty;
+}
+button {
+  width: 100%;
+  min-height: 56px;
+  border: 0;
+  border-radius: 18px;
+  background: #3f503a;
+  color: #f7f3ec;
+  font:
+    600 17px/1.4 Manrope,
+    sans-serif;
+  padding: 16px 20px;
+  margin: 32px 0 16px;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+button:active {
+  transform: scale(0.98);
+}
+button[hidden] {
+  display: none;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.note {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.help {
+  color: #3f503a;
+  font-size: 14px;
+  text-underline-offset: 4px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+}
+footer {
+  text-align: center;
+  padding: 8px 0;
+}
+footer p {
+  font-size: 12px;
+}
+.error .mascot {
+  width: 112px;
+  height: 97px;
+}
+:focus-visible {
+  outline: 3px solid #20477c;
+  outline-offset: 5px;
+}
+@media (prefers-reduced-motion: reduce) {
+  button {
+    transition: none;
+  }
+}
+@media (prefers-contrast: more) {
+  p {
+    color: #3a3833;
+  }
+  button {
+    border: 2px solid #1c1b19;
+  }
+}

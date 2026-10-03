@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" viewBox="0 0 220 190" class="eaze-mascot__svg" focusable="false">
+  <defs>
+    <linearGradient id="eazeMascotBlue_R_0_" x1="65%" y1="0%" x2="35%" y2="100%">
+      <stop offset="0%" stop-color="#D5E4FC"/>
+      <stop offset="24%" stop-color="#C4D9FF"/>
+      <stop offset="64%" stop-color="#A4C0EC"/>
+      <stop offset="100%" stop-color="#89A6D7"/>
+    </linearGradient>
+    <radialGradient id="eazeMascotDepth_R_0_" cx="89%" cy="29%" r="85%">
+      <stop offset="0%" stop-color="#E7F0FF" stop-opacity="0.75"/>
+      <stop offset="48%" stop-color="#C4D9FF" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#6F93CA" stop-opacity="0.32"/>
+    </radialGradient>
+    <radialGradient id="eazeMascotCurl_R_0_" cx="42%" cy="65%" r="28%">
+      <stop offset="0%" stop-color="#E2EDFF" stop-opacity="0.9"/>
+      <stop offset="44%" stop-color="#CDDEFA" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#C4D9FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="eazeMascotTail_R_0_" cx="97%" cy="72%" r="46%">
+      <stop offset="0%" stop-color="#D8E7FF" stop-opacity="0.9"/>
+      <stop offset="58%" stop-color="#C4D9FF" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#C4D9FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="eazeMascotRim_R_0_" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="87%" stop-color="#5D7FB6" stop-opacity="0"/>
+      <stop offset="97%" stop-color="#5D7FB6" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#395889" stop-opacity="0.65"/>
+    </linearGradient>
+    <radialGradient id="eazeMascotEye_R_0_" cx="32%" cy="23%" r="75%">
+      <stop offset="0%" stop-color="#4B4D50"/>
+      <stop offset="34%" stop-color="#1A1A1A"/>
+      <stop offset="78%" stop-color="#050708"/>
+      <stop offset="100%" stop-color="#1A1A1A"/>
+    </radialGradient>
+    <filter id="eazeMascotShadow_R_0_" x="-20%" y="-80%" width="140%" height="260%">
+      <feGaussianBlur stdDeviation="1.6"/>
+    </filter>
+  </defs>
+  <ellipse class="eaze-mascot__shadow" cx="111" cy="185" rx="76" ry="4.6" fill="rgba(28, 27, 25, 0.18)" filter="url(#eazeMascotShadow_R_0_)"/>
+  <ellipse class="eaze-mascot__contact" cx="114" cy="184.5" rx="50" ry="1.8" fill="rgba(28, 27, 25, 0.16)"/>
+  <g class="eaze-mascot__body-motion">
+    <path data-eaze-mascot-body="true" d="M133.04 0.0C98.71 0.0 68.41 18.25 47.38 43.29C27.9 65.87 16.14 92.46 18.31 117.82C19.86 146.27 31.3 168.54 55.73 177.82C69.64 183.38 86.96 184.0 111.39 184.0C133.04 184.0 152.83 183.07 166.44 177.51C184.06 170.39 194.27 158.33 197.98 143.8C202.0 130.19 197.67 118.44 187.16 113.8C175.71 108.54 164.27 112.26 153.45 117.2C137.37 124.63 122.22 132.97 108.61 132.05C99.02 131.43 92.84 126.79 94.07 118.75C95.0 110.4 102.11 105.14 112.01 105.45C123.14 105.45 134.89 109.16 147.26 107.31C167.98 106.38 184.06 99.27 193.96 87.52C203.55 76.38 204.78 64.01 200.45 49.48C196.43 31.85 186.23 17.32 170.77 9.28C159.63 3.09 146.95 0.0 133.04 0.0Z" fill="url(#eazeMascotBlue_R_0_)"/>
+    <path data-eaze-mascot-depth="true" d="M133.04 0.0C98.71 0.0 68.41 18.25 47.38 43.29C27.9 65.87 16.14 92.46 18.31 117.82C19.86 146.27 31.3 168.54 55.73 177.82C69.64 183.38 86.96 184.0 111.39 184.0C133.04 184.0 152.83 183.07 166.44 177.51C184.06 170.39 194.27 158.33 197.98 143.8C202.0 130.19 197.67 118.44 187.16 113.8C175.71 108.54 164.27 112.26 153.45 117.2C137.37 124.63 122.22 132.97 108.61 132.05C99.02 131.43 92.84 126.79 94.07 118.75C95.0 110.4 102.11 105.14 112.01 105.45C123.14 105.45 134.89 109.16 147.26 107.31C167.98 106.38 184.06 99.27 193.96 87.52C203.55 76.38 204.78 64.01 200.45 49.48C196.43 31.85 186.23 17.32 170.77 9.28C159.63 3.09 146.95 0.0 133.04 0.0Z" fill="url(#eazeMascotDepth_R_0_)" pointer-events="none"/>
+    <path data-eaze-mascot-depth="true" d="M133.04 0.0C98.71 0.0 68.41 18.25 47.38 43.29C27.9 65.87 16.14 92.46 18.31 117.82C19.86 146.27 31.3 168.54 55.73 177.82C69.64 183.38 86.96 184.0 111.39 184.0C133.04 184.0 152.83 183.07 166.44 177.51C184.06 170.39 194.27 158.33 197.98 143.8C202.0 130.19 197.67 118.44 187.16 113.8C175.71 108.54 164.27 112.26 153.45 117.2C137.37 124.63 122.22 132.97 108.61 132.05C99.02 131.43 92.84 126.79 94.07 118.75C95.0 110.4 102.11 105.14 112.01 105.45C123.14 105.45 134.89 109.16 147.26 107.31C167.98 106.38 184.06 99.27 193.96 87.52C203.55 76.38 204.78 64.01 200.45 49.48C196.43 31.85 186.23 17.32 170.77 9.28C159.63 3.09 146.95 0.0 133.04 0.0Z" fill="url(#eazeMascotCurl_R_0_)" pointer-events="none"/>
+    <path data-eaze-mascot-depth="true" d="M133.04 0.0C98.71 0.0 68.41 18.25 47.38 43.29C27.9 65.87 16.14 92.46 18.31 117.82C19.86 146.27 31.3 168.54 55.73 177.82C69.64 183.38 86.96 184.0 111.39 184.0C133.04 184.0 152.83 183.07 166.44 177.51C184.06 170.39 194.27 158.33 197.98 143.8C202.0 130.19 197.67 118.44 187.16 113.8C175.71 108.54 164.27 112.26 153.45 117.2C137.37 124.63 122.22 132.97 108.61 132.05C99.02 131.43 92.84 126.79 94.07 118.75C95.0 110.4 102.11 105.14 112.01 105.45C123.14 105.45 134.89 109.16 147.26 107.31C167.98 106.38 184.06 99.27 193.96 87.52C203.55 76.38 204.78 64.01 200.45 49.48C196.43 31.85 186.23 17.32 170.77 9.28C159.63 3.09 146.95 0.0 133.04 0.0Z" fill="url(#eazeMascotRim_R_0_)" pointer-events="none"/>
+    <path data-eaze-mascot-depth="true" d="M133.04 0.0C98.71 0.0 68.41 18.25 47.38 43.29C27.9 65.87 16.14 92.46 18.31 117.82C19.86 146.27 31.3 168.54 55.73 177.82C69.64 183.38 86.96 184.0 111.39 184.0C133.04 184.0 152.83 183.07 166.44 177.51C184.06 170.39 194.27 158.33 197.98 143.8C202.0 130.19 197.67 118.44 187.16 113.8C175.71 108.54 164.27 112.26 153.45 117.2C137.37 124.63 122.22 132.97 108.61 132.05C99.02 131.43 92.84 126.79 94.07 118.75C95.0 110.4 102.11 105.14 112.01 105.45C123.14 105.45 134.89 109.16 147.26 107.31C167.98 106.38 184.06 99.27 193.96 87.52C203.55 76.38 204.78 64.01 200.45 49.48C196.43 31.85 186.23 17.32 170.77 9.28C159.63 3.09 146.95 0.0 133.04 0.0Z" fill="url(#eazeMascotTail_R_0_)" pointer-events="none"/>
+    <path class="eaze-mascot__fold" d="M111 149 C125 157 143 155 159 152 C172 150 182 149 189 148" fill="none" stroke="#5476AB" stroke-width="0.8" stroke-linecap="round" opacity="0" pointer-events="none"/>
+    <g class="eaze-mascot__face">
+      <g class="eaze-mascot__gaze" style="transform:translate(0px, 0px)">
+        <g class="eaze-mascot__eyes ">
+          <ellipse cx="151.9" cy="64.94" rx="5.1" ry="10.2" transform="rotate(-8 151.9 64.94)" fill="url(#eazeMascotEye_R_0_)"/>
+          <ellipse cx="177.26" cy="57.52" rx="4.9" ry="10.1" transform="rotate(-8 177.26 57.52)" fill="url(#eazeMascotEye_R_0_)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

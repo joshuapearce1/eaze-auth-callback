@@ -1,24 +1,47 @@
 <!doctype html>
 <html lang="en" dir="ltr">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="referrer" content="no-referrer">
-  <meta name="robots" content="noindex,nofollow,noarchive">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; connect-src 'none'; form-action 'none'; img-src 'none'; script-src 'self'; style-src 'self'">
-  <title>Confirm your email — eaze</title>
-  <link rel="stylesheet" href="./style.css">
-  <script src="./confirm.js" defer></script>
-</head>
-<body>
-  <main>
-    <p class="brand" aria-label="eaze">eaze</p>
-    <h1 id="title">Continue in eaze.</h1>
-    <p id="message">Open the app to confirm your email and continue setting up your account.</p>
-    <button id="open" type="button" disabled>Open eaze</button>
-    <p class="note" id="help">Use the latest version of eaze on your iPhone. If this link has expired, return to the app to request a new confirmation email.</p>
-    <noscript><p>Please open this email on your iPhone and tap its confirmation button, or enable JavaScript to use this page.</p></noscript>
-    <a href="https://eaze.co.uk/support" rel="noreferrer">Get help</a>
-  </main>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; base-uri 'none'; connect-src 'none'; form-action 'none'; img-src 'self'; font-src 'self'; script-src 'self'; style-src 'self'"
+    />
+    <meta name="theme-color" content="#f7f3ec" />
+    <title>Continue to eaze</title>
+    <link rel="stylesheet" href="/assets/account.css" />
+    <script src="/assets/account-link.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <img
+        class="brand"
+        src="/assets/wordmark.svg"
+        alt="eaze"
+        width="88"
+        height="26"
+      />
+      <div class="brand-line" aria-hidden="true"></div>
+    </header>
+    <main>
+      <img class="mascot" src="/assets/e.svg" alt="" width="140" height="121" />
+      <h1 id="title">Continue in eaze.</h1>
+      <p id="message">Open the app to continue securely.</p>
+      <button id="open" type="button" disabled>Open eaze</button>
+      <p class="note" id="help" aria-live="polite">
+        Use this link on the iPhone where eaze is installed.
+      </p>
+      <noscript><p>Enable JavaScript to open eaze from this page.</p></noscript>
+    </main>
+    <footer>
+      <a class="help" href="https://eaze.co.uk/support" rel="noreferrer"
+        >Need a hand?</a
+      >
+    </footer>
+  </body>
 </html>
