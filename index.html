@@ -14,8 +14,8 @@
     />
     <meta name="theme-color" content="#f7f3ec" />
     <title>Continue to eaze</title>
-    <link rel="stylesheet" href="/assets/account.css" />
-    <script src="/assets/account-link.js" defer></script>
+    <link rel="stylesheet" href="/assets/account.css?v=2" />
+    <script src="/assets/account-link.js?v=2" defer></script>
   </head>
   <body>
     <header>
@@ -31,12 +31,18 @@
     <main>
       <img class="mascot" src="/assets/e.svg" alt="" width="140" height="121" />
       <h1 id="title">Continue in eaze.</h1>
-      <p id="message">Open the app to continue securely.</p>
-      <button id="open" type="button" disabled>Open eaze</button>
-      <p class="note" id="help" aria-live="polite">
-        Use this link on the iPhone where eaze is installed.
-      </p>
-      <noscript><p>Enable JavaScript to open eaze from this page.</p></noscript>
+      <p id="message">After installing eaze, reopen your newest email on this iPhone.</p>
+      <a class="get-app" href="https://testflight.apple.com/join/SarTE6My" rel="noreferrer">Get eaze in TestFlight</a>
+      <details id="installed" hidden>
+        <summary>I already have eaze</summary>
+        <button id="open" type="button" hidden disabled>Open eaze</button>
+        <p class="note" id="help" aria-live="polite"></p>
+      </details>
+      <section class="fresh-email" aria-labelledby="fresh-heading">
+        <h2 id="fresh-heading">Need a fresh email?</h2>
+        <p id="fresh-steps">In eaze, choose “Use an email link instead” to sign in or “Forgot password?” to reset your password. Enter your email and open the newest message on this iPhone.</p>
+      </section>
+      <noscript><p class="note">Open eaze from your Home Screen to request a fresh email.</p></noscript>
     </main>
     <footer>
       <a class="help" href="https://eaze.co.uk/support" rel="noreferrer"

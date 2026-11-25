@@ -54,14 +54,14 @@ main {
   width: 100%;
   max-width: 368px;
   margin: auto 0;
-  padding: 48px 0;
+  padding: clamp(20px, 4vh, 38px) 0;
   text-align: center;
 }
 .mascot {
-  width: 140px;
-  height: 121px;
+  width: 90px;
+  height: auto;
   display: block;
-  margin: 0 auto 32px;
+  margin: 0 auto 18px;
 }
 h1 {
   font-size: clamp(28px, 7.3vw, 34px);
@@ -78,9 +78,10 @@ p {
   color: #6b665e;
   text-wrap: pretty;
 }
+.get-app,
 button {
   width: 100%;
-  min-height: 56px;
+  min-height: 50px;
   border: 0;
   border-radius: 18px;
   background: #3f503a;
@@ -89,15 +90,68 @@ button {
     600 17px/1.4 Manrope,
     sans-serif;
   padding: 16px 20px;
-  margin: 32px 0 16px;
   cursor: pointer;
   transition: transform 0.15s;
 }
+.get-app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 22px;
+  text-decoration: none;
+}
+.get-app:active,
 button:active {
   transform: scale(0.98);
 }
-button[hidden] {
+[hidden] {
   display: none;
+}
+summary,
+.access-note a {
+  color: #3f503a;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  min-height: 44px;
+  padding: 11px 4px;
+  cursor: pointer;
+}
+summary {
+  line-height: 1.5;
+}
+.access-note a {
+  display: inline-block;
+}
+#installed {
+  margin-top: 4px;
+}
+#installed button {
+  background: transparent;
+  color: #3f503a;
+  border: 1px solid currentColor;
+}
+.fresh-email {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: #ecece2;
+  text-align: start;
+}
+.fresh-email h2 {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 0 0 6px;
+}
+.fresh-email p,
+.access-note {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  text-wrap: initial;
+}
+.access-note,
+.note:not(:empty) {
+  margin-top: 8px;
 }
 button:disabled {
   opacity: 0.5;
@@ -123,15 +177,12 @@ footer {
 footer p {
   font-size: 12px;
 }
-.error .mascot {
-  width: 112px;
-  height: 97px;
-}
 :focus-visible {
   outline: 3px solid #20477c;
   outline-offset: 5px;
 }
 @media (prefers-reduced-motion: reduce) {
+  .get-app,
   button {
     transition: none;
   }
@@ -140,6 +191,7 @@ footer p {
   p {
     color: #3a3833;
   }
+  .get-app,
   button {
     border: 2px solid #1c1b19;
   }

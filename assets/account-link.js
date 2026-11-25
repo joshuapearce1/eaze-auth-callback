@@ -14,27 +14,27 @@
   const copy = {
     signup: [
       "Confirm your email.",
-      "One tap, then you’re ready to make eaze yours.",
+      "After installing eaze, reopen your confirmation email on this iPhone.",
       "Confirm email in eaze",
     ],
     email: [
       "Continue in eaze.",
-      "Open the app to finish securely.",
+      "After installing eaze, reopen your newest email on this iPhone.",
       "Open eaze",
     ],
     magiclink: [
       "Welcome back.",
-      "Your sign-in link is ready. Let’s get you into eaze.",
+      "After installing eaze, reopen your sign-in email on this iPhone.",
       "Sign in to eaze",
     ],
     recovery: [
       "A fresh password.",
-      "Open eaze to choose your new password.",
+      "After installing eaze, reopen your reset email on this iPhone to choose a new password.",
       "Reset password in eaze",
     ],
     email_change: [
       "Confirm your email.",
-      "Open eaze to confirm your new email address.",
+      "After installing eaze, reopen your email to confirm the new address.",
       "Confirm email in eaze",
     ],
   };
@@ -43,6 +43,21 @@
   const button = document.getElementById("open");
   const help = document.getElementById("help");
   const defaultHelp = help.textContent;
+  const installed = document.getElementById("installed");
+  const freshSteps = document.getElementById("fresh-steps");
+  const defaultSteps = freshSteps?.textContent;
+  const signInSteps =
+    "On the eaze sign-in screen, choose “Use an email link instead”. Enter your email, tap “Send sign-in link” and open the newest email on this iPhone.";
+  const steps = {
+    signup:
+      "For a signup you’ve started, choose “Use an email link instead” on the eaze sign-in screen. Enter the address you signed up with, tap “Send sign-in link” and open the newest email.",
+    magiclink: signInSteps,
+    recovery:
+      "On the eaze sign-in screen, tap “Forgot password?”. Enter your email, tap “Send reset link” and open the newest email on this iPhone.",
+    email: signInSteps,
+    email_change:
+      "Open your newest email about the address change. If you need another, choose “Need a hand?” to contact eaze support.",
+  };
   let openLink;
 
   function refreshLink() {
@@ -70,12 +85,25 @@
       params.getAll("token_hash").length === 1 &&
       params.getAll("type").length === 1 &&
       /^[A-Za-z0-9._~-]{32,512}$/.test(tokenHash);
+    // Older cached pages still use this script with the original app button.
+    if (installed) {
+      installed.open = false;
+      installed.hidden = !valid;
+    }
+    if (freshSteps) {
+      const purpose = legacy && valid ? type : routes[path];
+      freshSteps.textContent = steps[purpose] ?? defaultSteps;
+    }
     if (!valid) {
       document.body.classList.add("error");
       title.textContent = "Let’s try a fresh link.";
-      message.textContent = "Open eaze and request a new account email.";
-      help.textContent =
-        "Use the most recent email, on the iPhone where eaze is installed.";
+      const expired =
+        params.get("error_code") === "otp_expired" ||
+        source.searchParams.get("error_code") === "otp_expired";
+      message.textContent = expired
+        ? "This link has expired or was already used. Follow the steps below for a fresh email."
+        : "Open your newest account email, or request another from the eaze sign-in screen.";
+      help.textContent = "";
       button.hidden = true;
       button.disabled = true;
       document.title = "Request a fresh link — eaze";
@@ -105,7 +133,9 @@
       }
       location.assign(callback.toString());
       help.textContent =
-        "If eaze didn’t open, check it’s installed on this iPhone and tap again.";
+        installed
+          ? "If eaze didn’t open, use the installation option above, then reopen your email."
+          : "If eaze didn’t open, install it on this iPhone, then reopen your email.";
     };
     button.addEventListener("click", openLink);
   }
