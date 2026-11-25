@@ -18,30 +18,70 @@ function page(path, fragment, extra = "") {
         addEventListener(event, callback) {
           this[event] = callback;
         },
+        removeEventListener(event, callback) {
+          if (this[event] === callback) delete this[event];
+        },
       },
     ]),
   );
   const redirects = [];
   const history = [];
   const context = {
-    window: {},
+    window: {
+      addEventListener(event, callback) {
+        this[event] = callback;
+      },
+    },
     document: {
       getElementById: (id) => elements[id],
-      body: { classList: { add() {} } },
+      body: { classList: { add() {}, remove() {} } },
     },
     location: {
       href: `https://account.eaze.co.uk${path}${extra}#${fragment}`,
+      get hash() {
+        return new URL(this.href).hash;
+      },
       assign: (url) => redirects.push(url),
     },
-    history: { replaceState: (_s, _t, url) => history.push(url) },
+    history: {
+      replaceState: (_s, _t, url) => {
+        history.push(url);
+        context.location.href = new URL(url, context.location.href).href;
+      },
+    },
     URL,
     URLSearchParams,
   };
   vm.runInNewContext(source, context);
-  return { elements, redirects, history };
+  function visit(fragment) {
+    const next = new URL(context.location.href);
+    next.hash = fragment;
+    context.location.href = next.href;
+    context.window.hashchange({ newURL: next.href });
+  }
+  return { elements, redirects, history, visit };
 }
 
 describe("authentication-only branded fallback", () => {
+  test("a second link in the same tab replaces the first action, including after an invalid link", () => {
+    const p = page("/staging/sign-in/", `token_hash=${proof}&type=magiclink`);
+    const second = "b".repeat(64);
+    p.visit(`token_hash=${second}&type=magiclink`);
+    p.elements.open.click();
+    expect(p.redirects).toEqual([
+      `uk.co.eaze.app://auth/staging/sign-in/#token_hash=${second}&type=magiclink`,
+    ]);
+    p.visit("type=magiclink");
+    expect(p.elements.open.hidden).toBe(true);
+    expect(p.elements.open.click).toBeUndefined();
+    p.visit(`token_hash=${proof}&type=magiclink`);
+    expect(p.elements.open.hidden).toBe(false);
+    expect(p.elements.open.disabled).toBe(false);
+    p.elements.open.click();
+    expect(p.redirects.at(-1)).toBe(
+      `uk.co.eaze.app://auth/staging/sign-in/#token_hash=${proof}&type=magiclink`,
+    );
+  });
   test("visiting never consumes proof or opens the app; an explicit tap uses the fixed app destination", () => {
     const p = page("/reset-password/", `token_hash=${proof}&type=recovery`);
     expect(p.history).toEqual(["/reset-password/"]);
