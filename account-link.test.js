@@ -7,9 +7,11 @@ const source = readFileSync(
   "utf8",
 );
 const proof = "a".repeat(64);
-function page(path, fragment, extra = "") {
+function page(path, fragment, extra = "", cachedMarkup = false) {
+  const ids = ["title", "message", "open", "help"];
+  if (!cachedMarkup) ids.push("installed", "fresh-steps");
   const elements = Object.fromEntries(
-    ["title", "message", "open", "help"].map((key) => [
+    ids.map((key) => [
       key,
       {
         textContent: "",
@@ -18,30 +20,70 @@ function page(path, fragment, extra = "") {
         addEventListener(event, callback) {
           this[event] = callback;
         },
+        removeEventListener(event, callback) {
+          if (this[event] === callback) delete this[event];
+        },
       },
     ]),
   );
   const redirects = [];
   const history = [];
   const context = {
-    window: {},
+    window: {
+      addEventListener(event, callback) {
+        this[event] = callback;
+      },
+    },
     document: {
       getElementById: (id) => elements[id],
-      body: { classList: { add() {} } },
+      body: { classList: { add() {}, remove() {} } },
     },
     location: {
       href: `https://account.eaze.co.uk${path}${extra}#${fragment}`,
+      get hash() {
+        return new URL(this.href).hash;
+      },
       assign: (url) => redirects.push(url),
     },
-    history: { replaceState: (_s, _t, url) => history.push(url) },
+    history: {
+      replaceState: (_s, _t, url) => {
+        history.push(url);
+        context.location.href = new URL(url, context.location.href).href;
+      },
+    },
     URL,
     URLSearchParams,
   };
   vm.runInNewContext(source, context);
-  return { elements, redirects, history };
+  function visit(fragment) {
+    const next = new URL(context.location.href);
+    next.hash = fragment;
+    context.location.href = next.href;
+    context.window.hashchange({ newURL: next.href });
+  }
+  return { elements, redirects, history, visit };
 }
 
 describe("authentication-only branded fallback", () => {
+  test("a second link in the same tab replaces the first action, including after an invalid link", () => {
+    const p = page("/staging/sign-in/", `token_hash=${proof}&type=magiclink`);
+    const second = "b".repeat(64);
+    p.visit(`token_hash=${second}&type=magiclink`);
+    p.elements.open.click();
+    expect(p.redirects).toEqual([
+      `uk.co.eaze.app://auth/staging/sign-in/#token_hash=${second}&type=magiclink`,
+    ]);
+    p.visit("type=magiclink");
+    expect(p.elements.open.hidden).toBe(true);
+    expect(p.elements.open.click).toBeUndefined();
+    p.visit(`token_hash=${proof}&type=magiclink`);
+    expect(p.elements.open.hidden).toBe(false);
+    expect(p.elements.open.disabled).toBe(false);
+    p.elements.open.click();
+    expect(p.redirects.at(-1)).toBe(
+      `uk.co.eaze.app://auth/staging/sign-in/#token_hash=${proof}&type=magiclink`,
+    );
+  });
   test("visiting never consumes proof or opens the app; an explicit tap uses the fixed app destination", () => {
     const p = page("/reset-password/", `token_hash=${proof}&type=recovery`);
     expect(p.history).toEqual(["/reset-password/"]);
@@ -66,6 +108,44 @@ describe("authentication-only branded fallback", () => {
         `uk.co.eaze.app://auth/${native}#token_hash=${proof}&type=${type}`,
       );
     }
+  });
+  test("fresh-email instructions follow the trusted action path for fresh and expired links", () => {
+    for (const [path, type, step] of [
+      ["/confirm/", "signup", "address you signed up with"],
+      ["/sign-in/", "magiclink", "Send sign-in link"],
+      ["/reset-password/", "recovery", "Send reset link"],
+    ]) {
+      for (const prefix of ["", "/staging"]) {
+        const p = page(prefix + path, `token_hash=${proof}&type=${type}`);
+        expect(p.elements["fresh-steps"].textContent).toContain(step);
+        expect(p.elements.installed.hidden).toBe(false);
+        expect(p.elements.installed.open).toBe(false);
+        p.elements.installed.open = true;
+        p.visit("error=access_denied&error_code=otp_expired");
+        expect(p.elements["fresh-steps"].textContent).toContain(step);
+        expect(p.elements.message.textContent).toContain("expired");
+        expect(p.elements.installed.open).toBe(false);
+        expect(p.elements.installed.hidden).toBe(true);
+        expect(p.elements.open.click).toBeUndefined();
+        expect(p.redirects).toEqual([]);
+      }
+    }
+    const mismatched = page("/reset-password/", `token_hash=${proof}&type=signup`);
+    expect(mismatched.elements["fresh-steps"].textContent).toContain("Forgot password?");
+    expect(mismatched.elements.open.hidden).toBe(true);
+  });
+  test("query-form expiry, a second legacy action and cached pages retain their intended behavior", () => {
+    const expired = page("/confirm/", "", "?error_code=otp_expired");
+    expect(expired.elements.message.textContent).toContain("expired");
+    expect(expired.elements.installed.hidden).toBe(true);
+    const legacy = page("/", `token_hash=${proof}&type=magiclink`);
+    legacy.elements.installed.open = true;
+    legacy.visit(`token_hash=${proof}&type=recovery`);
+    expect(legacy.elements.installed.open).toBe(false);
+    expect(legacy.elements["fresh-steps"].textContent).toContain("Send reset link");
+    const cached = page("/sign-in/", `token_hash=${proof}&type=magiclink`, "", true);
+    cached.elements.open.click();
+    expect(cached.redirects).toEqual([`uk.co.eaze.app://auth/sign-in/#token_hash=${proof}&type=magiclink`]);
   });
   test("staging links stay explicitly staging and distinguish sign-in from account confirmation", () => {
     const p = page("/staging/sign-in/", `token_hash=${proof}&type=magiclink`);
@@ -95,7 +175,7 @@ describe("authentication-only branded fallback", () => {
       expect(p.redirects).toEqual([]);
     }
   });
-  test("all published landing pages forbid connections, forms and third-party resources", () => {
+  test("every landing page offers the correct installation route before the installed-only button", () => {
     for (const path of [
       "index.html",
       "confirm/index.html",
@@ -112,6 +192,18 @@ describe("authentication-only branded fallback", () => {
       expect(html).toContain("form-action 'none'");
       expect(html).toContain('content="no-referrer"');
       expect(html).not.toContain("supabase.co");
+      const getApp = html.match(/<a class="get-app" href="([^"]+)" rel="noreferrer">/);
+      const staging = path.startsWith("staging/");
+      expect(getApp?.[1]).toBe(
+        staging ? "https://testflight.apple.com/" : "https://testflight.apple.com/join/SarTE6My",
+      );
+      expect(html.indexOf('class="get-app"')).toBeLessThan(html.indexOf('<details id="installed" hidden>'));
+      expect(html).toContain('<summary>I already have eaze</summary>');
+      expect(html).toContain('id="fresh-steps"');
+      if (staging) {
+        expect(html).toContain('href="https://eaze.co.uk/support" rel="noreferrer">Request a test invitation');
+        expect(html).not.toContain("testflight.apple.com/join/");
+      }
     }
   });
 });

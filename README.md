@@ -12,6 +12,8 @@ New email URLs use an exact action path and a fragment containing only `token_ha
 
 The app verifies one-time proof against its own pinned backend. This page makes **no verification request**, has no cookies/session storage/analytics, strips the fragment immediately and opens only a fixed `uk.co.eaze.app://auth/...` URL after a member's explicit tap. A mail scanner fetch cannot consume the proof. Invalid links have no active authentication button. An unsuccessful app-open attempt can be retried.
 
+Public pages offer Eaze’s existing TestFlight invitation. Staging pages point testers to TestFlight, their assigned build invitation and Eaze support for access. Installation and support links have fixed destinations and omit the referrer. The native handoff is under **I already have eaze**. Every page includes instructions for getting another email in the app. A server-reported expiry hides the handoff. An opaque email link carries no expiry timestamp, so the same instructions also appear before verification.
+
 Compatibility: existing root-fragment links keep `/auth/callback`, and existing `/confirm/` links keep `/auth/confirm`. Their purpose and proof are preserved. The older `confirm/confirm.js` and `confirm/style.css` remain available for previously cached documents; new documents use assets/account-link.js and assets/account.css.
 
 The AASA file lists only account-action paths for the existing app identifier `7PVT5WZ6V8.uk.co.eaze.app`. Universal Links additionally require the Associated Domains entitlement in an installed signed app, Apple's association cache and a supporting email client. A website deployment alone cannot update an installed iPhone binary.
